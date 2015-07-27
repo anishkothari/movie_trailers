@@ -8,7 +8,7 @@ To clone, run: git clone https://github.com/anishkothari/movie_trailers.git
 
 To run, navigate to the directory and run 'python entertainmentcenter.py'. A new tab will open with the HTML output. Click on a movie's poster to view that movie's trailer. Links to the film's IMDB page and soundtrack are also provided. Enjoy!
 
-[Screenshot] (https://github.com/github/training-kit/blob/master/screenshot.png)
+[Screenshot] (https://github.com/anishkothari/movie_trailers/blob/master/screenshot.png)
 
 Requirements: Python 2.7
 
