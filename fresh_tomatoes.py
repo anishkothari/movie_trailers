@@ -49,8 +49,8 @@ main_page_head = '''
             height: 100%;
         }
         .movie-tile {
-            margin-bottom: 20px;
-            padding-top: 20px;
+            margin-bottom: 10px;
+            padding-top: 10px;
         }
         .movie-tile:hover {
             background-color: lightblue;
@@ -68,13 +68,6 @@ main_page_head = '''
             left: 0;
             top: 0;
             background-color: blue;
-        }
-        .navbar{
-            color: white;
-        }
-        .navbar-brand{
-            color: white;
-        }
     </style>
     <script type="text/javascript" charset="utf-8">
         // Pause the video when the modal is closed
@@ -127,8 +120,8 @@ main_page_content = '''
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-right navbar-header">
-            <a class="navbar-brand" href="#">Welcome to the Best of Bollywood!</a>
-            <a class="navbar-brand" href="#">Click on the movie poster to see a trailer!</a>
+            <p class="navbar-brand"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+            Welcome to the Best of Bollywood! Click on the movie poster to see a trailer!</p>
           </div>
         </div>
       </div>
@@ -148,6 +141,15 @@ movie_tile_content = '''
 <div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
     <h2>{movie_title}</h2>
+    <div class="well">
+    <h5>{movie_storyline}</h5>
+        <h5>Translated Title: {translated_title}</h5>
+        <p><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Location: {location} | Year: {year}</p>
+        <p><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+        <a target="_blank" href="{imdb_page_url}">IMDB page</a> | Rating: {imdb_rating}</p>
+        <p><span class="glyphicon glyphicon-music" aria-hidden="true"></span>
+        <a target="_blank" href="{saavn_page}">Listen to the soundtrack on Saavn!</a></p>
+    </div>
 </div>
 '''
 
@@ -163,23 +165,29 @@ def create_movie_tiles_content(movies):
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
+            translated_title=movie.translated_title,
             movie_storyline=movie.storyline,
             poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id
+            trailer_youtube_id=trailer_youtube_id,
+            imdb_page_url=movie.imdb_page_url,
+            imdb_rating=movie.imdb_rating,
+            location=movie.location,
+            year=movie.year,
+            saavn_page=movie.saavn_page
         )
     return content
 
 def open_movies_page(movies):
   # Create or overwrite the output file
-  output_file = open('fresh_tomatoes.html', 'w')
+    output_file = open('fresh_tomatoes.html', 'w')
 
   # Replace the placeholder for the movie tiles with the actual dynamically generated content
-  rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies))
+    rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies))
 
   # Output the file
-  output_file.write(main_page_head + rendered_content)
-  output_file.close()
+    output_file.write(main_page_head + rendered_content)
+    output_file.close()
 
   # open the output file in the browser
-  url = os.path.abspath(output_file.name)
-  webbrowser.open('file://' + url, new=2) # open in a new tab, if possible
+    url = os.path.abspath(output_file.name)
+    webbrowser.open('file://' + url, new=2) # open in a new tab, if possible
